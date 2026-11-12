@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>10 Things I Hate About You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#d7261e; --paper:#f6efe6; --ink:#140b0a; --bg:#d7261e;
+  --display:'Anton','Impact','Arial Narrow',sans-serif;
+  --body:'Special Elite','Courier New',monospace;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:dark;
+}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--paper);font-family:var(--body);overflow-x:hidden;transition:background .9s ease}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.12;mix-blend-mode:multiply;
+  background-image:repeating-linear-gradient(115deg,transparent 0 6px,#000 6px 7px)}
+main{min-height:100dvh;display:flex;flex-direction:column;justify-content:center;padding:clamp(20px,5vw,64px);max-width:1100px;margin:0 auto;position:relative}
+.screen{display:none}
+.screen.on{display:block}
+h1{font-family:var(--display);font-weight:400;text-transform:uppercase;line-height:.88;margin:0;font-size:clamp(56px,15vw,170px);letter-spacing:.005em}
+h1 .big{display:block;font-size:1.55em;color:var(--ink);-webkit-text-stroke:0;transform-origin:left bottom}
+h1 .hate{display:inline-block;background:var(--ink);color:var(--paper);padding:0 .12em;transform:rotate(-2deg);margin:.05em 0}
+.lede{font-size:clamp(16px,2.2vw,20px);max-width:34ch;margin:28px 0 22px;line-height:1.4}
+label{display:block;font-size:15px;margin-bottom:8px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:stretch}
+input{flex:1 1 240px;min-width:0;font:inherit;font-size:22px;padding:14px 16px;background:var(--paper);color:var(--ink);border:3px solid var(--ink);border-radius:0;outline:none}
+input::placeholder{color:#8a7a72}
+input:focus-visible{box-shadow:6px 6px 0 var(--ink)}
+.btn{font-family:var(--display);font-size:24px;letter-spacing:.04em;text-transform:uppercase;background:var(--ink);color:var(--paper);border:3px solid var(--ink);padding:14px 28px;cursor:pointer;transition:transform .12s ease,box-shadow .12s ease,background .12s}
+.btn:hover{transform:translate(-3px,-3px) skewX(-4deg);box-shadow:6px 6px 0 var(--paper)}
+.btn:active{transform:translate(2px,2px);box-shadow:none}
+.btn:focus-visible,.ghost:focus-visible{outline:3px solid var(--paper);outline-offset:4px}
+.btn.alt{background:transparent;color:var(--paper);border-color:var(--paper)}
+.err{height:1.4em;margin-top:10px;font-size:15px;color:var(--ink)}
+.shake{animation:nope .4s}
+@keyframes nope{20%{transform:translateX(-10px)}40%{transform:translateX(9px)}60%{transform:translateX(-6px)}80%{transform:translateX(4px)}}
+
+/* list screen */
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:clamp(12px,3vh,32px);font-size:15px}
+.tally{display:flex;gap:7px}
+.tally i{width:10px;height:34px;background:rgba(20,11,10,.25);transform-origin:bottom;transition:background .2s}
+.tally i.on{background:var(--ink);animation:scratch .35s cubic-bezier(.2,1.6,.4,1)}
+.tally i:nth-child(odd).on{transform:rotate(7deg)}
+.tally i:nth-child(even).on{transform:rotate(-7deg)}
+@keyframes scratch{0%{transform:scaleY(0)}100%{transform:scaleY(1)}}
+.card{position:relative}
+.num{font-family:var(--display);font-size:clamp(120px,32vw,340px);line-height:.8;color:transparent;-webkit-text-stroke:3px var(--ink);display:block}
+.card.in{animation:slam .5s cubic-bezier(.2,.9,.2,1.2) both}
+@keyframes slam{0%{transform:scale(2.4) rotate(-8deg);opacity:0}55%{transform:scale(.95) rotate(1deg);opacity:1}100%{transform:none}}
+.stage.hit{animation:quake .35s .18s}
+@keyframes quake{10%{transform:translate(-9px,5px)}30%{transform:translate(8px,-6px)}50%{transform:translate(-6px,-3px)}70%{transform:translate(4px,4px)}}
+.line{font-family:var(--display);text-transform:uppercase;font-size:clamp(34px,7.2vw,84px);line-height:1;margin:.1em 0 0;position:relative;display:inline-block;max-width:16em}
+.w{display:inline-block;opacity:0;transform:translateY(.6em) rotate(4deg);animation:word .35s cubic-bezier(.2,.9,.3,1.3) forwards}
+@keyframes word{to{opacity:1;transform:none}}
+.name{background:var(--ink);color:var(--paper);padding:0 .12em}
+.scribble{position:absolute;left:-1%;bottom:-.25em;width:102%;height:.4em;overflow:visible;pointer-events:none}
+.scribble path{fill:none;stroke:var(--ink);stroke-width:5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:draw .6s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.next{margin-top:clamp(24px,5vh,48px);opacity:0;animation:pop .3s ease forwards}
+@keyframes pop{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hint{margin-left:14px;font-size:14px;opacity:.8}
+
+/* verdict */
+.verdict ol{margin:24px 0;padding:0;list-style:none;columns:2 280px;column-gap:32px;font-size:16px;line-height:1.35}
+.verdict li{break-inside:avoid;margin:0 0 12px;padding-left:2.4em;position:relative}
+.verdict li b{position:absolute;left:0;font-family:var(--display);font-weight:400;font-size:1.5em;line-height:1;color:var(--ink)}
+.verdict li{opacity:0;animation:pop .3s ease forwards}
+.stamp{display:inline-block;font-family:var(--display);font-size:clamp(28px,6vw,60px);text-transform:uppercase;border:5px solid var(--ink);color:var(--ink);padding:.1em .3em;transform:rotate(-4deg);animation:stamp .4s .2s cubic-bezier(.2,.9,.2,1.3) both}
+@keyframes stamp{0%{transform:scale(3) rotate(-14deg);opacity:0}100%{transform:scale(1) rotate(-4deg);opacity:1}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<main>
+
+  <section class="screen on" id="intro">
+    <h1><span class="hate">10 things</span><br>I hate<span class="big">about you</span></h1>
+    <p class="lede">Type a name. I’ve got a list. It’s not going to be nice.</p>
+    <div class="row" id="row">
+      <input id="nm" type="text" maxlength="24" autocomplete="off" placeholder="Their name" aria-label="Their name">
+      <button class="btn" id="go">Read the list</button>
+    </div>
+    <div class="err" id="err" role="alert"></div>
+  </section>
+
+  <section class="screen" id="list" aria-live="polite">
+    <div class="top"><span id="who"></span><div class="tally" id="tally"></div></div>
+    <div class="stage" id="stage">
+      <div class="card" id="card">
+        <span class="num" id="num">1</span>
+        <p class="line" id="line"></p>
+      </div>
+      <div class="next" id="nextWrap"><button class="btn" id="next">Next</button><span class="hint">or hit Enter</span></div>
+    </div>
+  </section>
+
+  <section class="screen verdict" id="end">
+    <h1 style="font-size:clamp(48px,11vw,120px)">That’s all of it.</h1>
+    <ol id="all"></ol>
+    <div class="stamp" id="stamp">Still mad</div>
+    <div class="row" style="margin-top:28px">
+      <button class="btn" id="again">Hate someone else</button>
+      <button class="btn alt" id="replay">Read it again</button>
+    </div>
+  </section>
+
+</main>
+<script>
+(function(){
+  /* =====================================================================
+     ADD PEOPLE HERE
+     ---------------------------------------------------------------------
+     To add a new person, copy one block below, paste it after the last one
+     (keep the comma between blocks) and change:
+       - the key (lowercase, e.g. "rahul")
+       - display:  how the name appears on the page
+       - aliases:  other spellings that should also work (optional)
+       - things:   as many lines as you want (not limited to 10)
+     Use {n} inside a line to drop in their name (highlighted).
+     ===================================================================== */
+  var PEOPLE = {
+
+    "devarsh": {
+      display: "Devarsh",
+      aliases: ["dev", "devarsh"],
+      things: [
+        // ---- REPLACE THESE WITH YOUR OWN THINGS ABOUT DEVARSH ----
+        "THING 1 about {n} goes here.",
+        "THING 2 goes here.",
+        "THING 3 goes here.",
+        "THING 4 goes here.",
+        "THING 5 goes here.",
+        "THING 6 goes here.",
+        "THING 7 goes here.",
+        "THING 8 goes here.",
+        "THING 9 goes here.",
+        "THING 10 goes here."
+        // ---- add or remove lines freely, just keep the commas ----
+      ]
+    }
+
+    // , "nextperson": { display: "Next Person", aliases: [], things: [ "..." ] }
+
+  };
+
+  // Shown when someone types a name that has no list yet
+  var NO_LIST_MSG = "I don\u2019t have a list for you. Yet. Lucky you.";
+
+  var LIST = [];   // filled in when a name is matched
+
+  function findPerson(input){
+    var q = input.trim().toLowerCase();
+    for (var key in PEOPLE){
+      var p = PEOPLE[key];
+      var names = [key].concat(p.aliases || []).map(function(a){return a.toLowerCase()});
+      if (names.indexOf(q) !== -1) return p;
+    }
+    return null;
+  }
+
+  var $=function(i){return document.getElementById(i)};
+  var name="", i=0, busy=false;
+  var from=[215,38,30], to=[74,10,9];
+
+  function show(id){
+    ["intro","list","end"].forEach(function(s){$(s).classList.toggle("on",s===id)});
+  }
+  function mix(t){
+    return "rgb("+from.map(function(a,k){return Math.round(a+(to[k]-a)*t)}).join(",")+")";
+  }
+  function buildTally(){
+    var t=$("tally"); t.innerHTML="";
+    for(var k=0;k<LIST.length;k++){t.appendChild(document.createElement("i"))}
+  }
+  function start(){
+    var v=$("nm").value.trim();
+    if(!v){
+      $("err").textContent="Name first. Even I need something to work with.";
+      $("row").classList.remove("shake"); void $("row").offsetWidth; $("row").classList.add("shake");
+      return;
+    }
+    var person=findPerson(v);
+    if(!person){
+      $("err").textContent=NO_LIST_MSG;
+      $("row").classList.remove("shake"); void $("row").offsetWidth; $("row").classList.add("shake");
+      return;
+    }
+    name=person.display; LIST=person.things; i=0; $("err").textContent="";
+    $("who").textContent="Re: "+name;
+    buildTally(); show("list"); render();
+  }
+  function render(){
+    busy=true;
+    var card=$("card"), stage=$("stage");
+    document.body.style.background=mix(LIST.length>1?i/(LIST.length-1):1);
+    $("nextWrap").style.display="none";
+    $("num").textContent=i+1;
+    var t=$("tally").children;
+    for(var k=0;k<=i;k++){t[k].classList.add("on")}
+    // slam + quake
+    card.classList.remove("in"); stage.classList.remove("hit");
+    void card.offsetWidth;
+    card.classList.add("in"); stage.classList.add("hit");
+    // words, built safely (name inserted as text)
+    var line=$("line"); line.innerHTML="";
+    var parts=LIST[i].split(/(\s+)/), d=0.38, last=i===LIST.length-1;
+    parts.forEach(function(p){
+      if(!p.trim()){line.appendChild(document.createTextNode(" "));return}
+      var s=document.createElement("span"); s.className="w";
+      var m=p.match(/^(.*?)\{n\}(.*)$/);
+      if(m){
+        s.appendChild(document.createTextNode(m[1]));
+        var nm=document.createElement("span"); nm.className="name"; nm.textContent=name.toUpperCase(); s.appendChild(nm);
+        s.appendChild(document.createTextNode(m[2]));
+      } else s.textContent=p;
+      s.style.animationDelay=d+"s"; d+=0.07; line.appendChild(s);
+    });
+    var ns="http://www.w3.org/2000/svg";
+    var svg=document.createElementNS(ns,"svg");
+    svg.setAttribute("class","scribble"); svg.setAttribute("viewBox","0 0 100 10"); svg.setAttribute("preserveAspectRatio","none");
+    var path=document.createElementNS(ns,"path");
+    path.setAttribute("d","M0 6 C 15 1, 25 10, 40 5 S 70 1, 100 6"); path.setAttribute("pathLength","1");
+    path.setAttribute("vector-effect","non-scaling-stroke");
+    path.style.animationDelay=(d+0.1)+"s";
+    svg.appendChild(path); line.appendChild(svg);
+    setTimeout(function(){
+      var b=$("next"); b.textContent=last?"Okay, I’m done":"Next";
+      $("nextWrap").style.display="block"; $("nextWrap").style.animationDelay="0s";
+      $("nextWrap").style.animation="none"; void $("nextWrap").offsetWidth; $("nextWrap").style.animation="";
+      busy=false; b.focus({preventScroll:true});
+    }, (d+0.7)*1000);
+  }
+  function advance(){
+    if(busy) return;
+    if(i<LIST.length-1){i++; render()} else finish();
+  }
+  function finish(){
+    var ol=$("all"); ol.innerHTML="";
+    LIST.forEach(function(t,k){
+      var li=document.createElement("li"); li.style.animationDelay=(k*0.06)+"s";
+      var b=document.createElement("b"); b.textContent=k+1;
+      li.appendChild(b); li.appendChild(document.createTextNode(t.split("{n}").join(name)));
+      ol.appendChild(li);
+    });
+    $("stamp").textContent="Still mad at "+name;
+    document.body.style.background=mix(1);
+    show("end"); window.scrollTo(0,0);
+  }
+  $("go").addEventListener("click",start);
+  $("nm").addEventListener("keydown",function(e){if(e.key==="Enter")start()});
+  $("next").addEventListener("click",advance);
+  document.addEventListener("keydown",function(e){
+    if($("list").classList.contains("on") && (e.key==="ArrowRight"||e.key==="Enter"||e.key===" ")){
+      if(e.target===$("next") && e.key!=="ArrowRight") return;
+      e.preventDefault(); advance();
+    }
+  });
+  $("again").addEventListener("click",function(){
+    $("nm").value=""; document.body.style.background=mix(0); show("intro"); $("nm").focus();
+  });
+  $("replay").addEventListener("click",function(){i=0; buildTally(); show("list"); render()});
+})();
+</script>
+</body>
+</html>
